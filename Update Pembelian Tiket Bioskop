@@ -1,0 +1,504 @@
+#include <iostream>
+#include <iomanip>
+#include <vector>
+#include <string>
+using namespace std;
+
+struct Member {
+	string nama;
+	string noTelepon;
+};
+
+//vector data member untuk memberikan data yang tetap
+vector<Member> daftarMember = {
+    {"Aishawa Putri Daviorda", "085714439204"},
+    {"Fadli Yusra", "085893469289"},
+    {"Muhammad Irfai", "085771705674"}
+};
+
+//Fungsi untuk menambahkan member baru
+void registrasiMember() {
+    Member memberBaru;
+
+    cout << endl << "Masukkan Nama : ";
+	cin >> memberBaru.nama;
+    cout << "Masukkan Nomor Telepon : ";
+    cin >> memberBaru.noTelepon;
+
+    daftarMember.push_back(memberBaru);
+    cout << "Selamat, " << memberBaru.nama 
+         << "! Anda telah resmi terdaftar sebagai member kami dengan nomor telepon " << memberBaru.noTelepon << ".\n";
+	
+}
+
+struct TiketBioskop {
+    string film;
+    double harga;
+    int jumlah;
+};
+
+struct Makanan {
+    string nama;
+    double harga;
+    int jumlah;
+};
+
+struct JenisKursi{
+	string jenis;
+	double harga;
+};
+
+//Fungsi menampilkan daftar film
+void tampilkanMenuFilm() {
+    cout << "\nMenu Film:\n";
+    cout << "1. " << left << setw(15) << "Film A" << "Rp 50.000\n";
+    cout << "2. " << left << setw(15) << "Film B" << "Rp 55.000\n";
+    cout << "3. " << left << setw(15) << "Film C" << "Rp 60.000\n";
+    cout << "4. " << left << setw(15) << "Film D" << "Rp 65.000\n";
+}
+
+//Fungsi menampilkan jenis kursi dan harga tambahan nya
+void tampilkanJenisKursi() {
+	cout << "\nJenis Kursi:\n";
+	cout << "1. " << left << setw(15) << "Reguler" << "Rp 0\n";
+    cout << "2. " << left << setw(15) << "Deluxe" << "Rp 10.000\n";
+    cout << "3. " << left << setw(15) << "VIP" << "Rp 20.000\n";
+    cout << "4. " << left << setw(15) << "Couple Seat" << "Rp 35.000\n";
+    cout << "5. " << left << setw(15) << "SweetBox" << "Rp 50.000\n";	
+}
+
+//Fungsi menampilan menu makanan
+void tampilkanMenuMakanan() {
+    cout << "\nMenu Makanan: \n";
+    cout << "1." << left << setw(15) << "Popcorn" << "Rp 20.000\n";
+    cout << "2. Minuman:\n" ;
+	cout << "   a." << left << setw(15) << "Americano" << "Rp 15.000\n"; 
+    cout << "   b." << left << setw(15) << "Coffee Latte" << "Rp 30.000\n"; // Menambahkan Americano
+    cout << "   c." << left << setw(15) << "Macchiato" << "Rp 30.000\n"; // Menambahkan Macchiato
+    cout << "3." << left << setw(15) << "Snack" << "Rp 25.000\n";
+}
+
+//fungsi dengan tipe data TiketBioskop untuk mengisi struct TiketBioskop
+TiketBioskop pilihFilm(){
+	int pilihan;
+	TiketBioskop tiket; //Deklarasi variabel yang akan menampung data bertipe TiketBioskop, yang memliki struktur film, harga, jumlah  
+    while (true) {
+        cout << "Pilihan Film (1-4): ";
+        cin >> pilihan;
+
+		//Jika pengguna memberikan input yang tidak valid (selain 1-4), Memberikan pesan dan menghapus data yang error
+        if (cin.fail()) { 
+            cin.clear();  
+            cin.ignore(1000, '\n');  
+            cout << "Input tidak valid.\n\n";
+        } else {
+            break; 
+        }
+    }
+    
+    //Menentukan tiket berdasarkan pilihan 
+	switch (pilihan) {
+        case 1:
+            tiket = { "Film A", 50000, 0 };
+            break;
+        case 2:
+            tiket = { "Film B", 55000, 0 };
+            break;
+        case 3:
+            tiket = { "Film C", 60000, 0 };
+            break;
+        case 4:
+            tiket = { "Film D", 65000, 0 };
+            break;
+        default:
+        	cout << "Pilihan tidak valid.\n\n";
+            return pilihFilm();
+        }
+        
+        while (true) {
+	        cout << "Masukkan jumlah tiket yang ingin dibeli: ";
+			cin >> tiket.jumlah;
+			//Jika pengguna memberikan input yang tidak valid (selain angka), Memberikan pesan dan menghapus data yang error
+	        if (cin.fail()) { 
+	            cin.clear();             
+	            cin.ignore(1000, '\n');  
+	            cout << "Input tidak valid.\n\n";
+	        } else {
+	            break; 
+	        }
+    	}
+        return tiket;    
+}
+
+// Fungsi unruk memilih kursi dengan parameter jumlah
+JenisKursi pilihKursi(int& jumlah){
+	int pilihan;
+	char edit;
+	TiketBioskop tiket; //Deklarasi variabel yang akan menampung data bertipe TiketBioskop, yang memliki struktur film, harga, jumlah  
+	JenisKursi Kursi; //Deklarasi variabel yang akan menampung data bertipe JenisKursi, yang memliki struktur jenis dan harga  
+
+	while (true) {
+		cout << "Pilih kursi (1-5): ";
+		cin >> pilihan;
+	
+		//Jika pengguna memberikan input yang tidak valid (selain 1-5), Memberikan pesan dan menghapus data yang error
+	    if (cin.fail()) { 
+	        cin.clear();             
+	        cin.ignore(1000, '\n');  
+	        cout << "Input tidak valid.\n\n";
+	    } else {
+	        break; 
+	    }
+    }
+	
+	//Mengisikan Kursi berdasarkan pilihan
+	switch (pilihan) {
+	   	case 1:
+	        Kursi = { "Reguler", 0 };
+	        break;
+	    case 2:
+	        Kursi = { "Deluxe", 10000 };
+	        break;
+	    case 3:
+	        Kursi = { "VIP", 20000 };
+	        break;
+	    case 4:
+	    	//Jika jumlah kursi ganjil, akan memberikan pesan dan pertanyaan untuk mengubah jumlah tiket atau mengubah jenis kursi
+	        if(jumlah % 2 != 0){
+	            cout << "Jumlah tiket untuk Couple Seat harus genap!\n";
+	            cout << "Apakah ingin mengubah jumlah tiket? (y/n): ";
+	            cin >> edit;
+	            if(edit == 'y' || edit == 'Y'){
+	            	cout << "Masukkan jumlah tiket yang ingin dibeli: ";
+	            	cin >> jumlah;
+	        	}
+	            return pilihKursi(jumlah);
+			}else{
+				Kursi = { "Couple Seat", 35000 };
+				break;
+			}
+	    case 5:
+	    	//Jika jumlah kursi ganjil, akan memberikan pesan dan pertanyaan untuk mengubah jumlah tiket atau mengubah jenis kursi
+	        if(jumlah % 2 != 0){
+	            cout << "Jumlah tiket untuk SweetBox harus genap!\n";
+	            cout << "Apakah ingin mengubah jumlah tiket? (y/n): ";
+	            cin >> edit;
+	            
+	            if(edit == 'y' || edit == 'Y'){
+	            	cout << "Masukkan jumlah tiket yang ingin dibeli: ";
+	            	cin >> jumlah;
+	        	}	
+	            return pilihKursi(jumlah);
+			}else{
+				Kursi = { "SweetBox", 50000 };
+				break;
+			}
+	    default:
+	        cout << "Pilihan tidak valid.\n\n";
+	        return pilihKursi(jumlah);
+	}
+	return Kursi;	
+}
+
+//Fungsi untuk memilih makanan & minuman 
+Makanan pilihMakananMinuman() {
+    int pilihan;
+    Makanan makanan;
+    
+    while (true) {
+		cout << "Pilih makanan (1-3) atau minuman (2a-2c): ";
+		cin >> pilihan;
+	
+		// Memeriksa pilihan untuk submenu minuman
+        if (pilihan == 2) {
+            char subpilihan;
+            cout << "Pilih jenis minuman (a,b,c): ";
+            cin >> subpilihan;
+            if (subpilihan == 'a') {
+                makanan = { "Americano", 15000, 0 };
+            } else if (subpilihan == 'b') {
+                makanan = { "Coffee Latte", 30000, 0 };
+			} else if (subpilihan == 'c') {
+                makanan = { "Macchiato", 30000, 0 };
+            } else {
+                cout << "Pilihan tidak valid.\n\n";
+                continue; // Kembali ke awal loop jika pilihan tidak valid
+            }
+            break; // Keluar dari loop setelah memilih minuman
+        }
+
+        // Mengisi variabel makanan berdasarkan pilihan yang di berikan
+        switch (pilihan) {
+            case 1:
+                makanan = { "Popcorn", 20000, 0 };
+                break;
+            case 3:
+                makanan = { "Snack", 25000, 0 };
+                break;
+            default:
+                cout << "Pilihan tidak valid.\n\n";
+                continue; // Kembali ke awal loop jika pilihan tidak valid
+        }
+        break; // Keluar dari loop setelah memilih makanan
+    }
+
+    cout << "Masukkan jumlah " << makanan.nama << " yang ingin dibeli: ";
+    cin >> makanan.jumlah;
+    return makanan;
+}
+
+//Fungsi menghitung diskon pemilik member
+float hitungDiskonMember(float totalHarga){
+	return totalHarga * 0.05;
+}
+
+//Fungsi menghitung diskon niminal pembekian
+float hitungDiskonMinPembelian(int totalJumlah, double totalHarga) {
+    if (totalJumlah >= 5) {
+        return totalHarga * 0.1; // Diskon 10% jika beli 5 tiket atau lebih
+    }
+    return 0;
+}
+
+// Fungsi untuk memperbarui pesanan tiket jika film dan jenis kursi yang dipilih sama
+bool updatePesananTiket(vector<TiketBioskop>& tiketList, vector<JenisKursi>& kursiList, const TiketBioskop& tiketBaru, const JenisKursi kursiBaru){
+	for(int i = 0;  i < tiketList.size(); i++){
+		if (tiketList[i].film == tiketBaru.film && kursiList[i].jenis == kursiBaru.jenis){
+			tiketList[i].jumlah += tiketBaru.jumlah; // Menambahkan jumlah tiket yang baru dipesan ke jumlah tiket yang sudah ada
+			return true;
+		}
+	}
+	return false;
+}
+
+// Fungsi untuk memperbarui pesanan makanan jika nama yang dipilih sama
+bool updatePesananMakanan(vector<Makanan>& MakananList, const Makanan& makananBaru){
+	for(int i = 0;  i < MakananList.size(); i++){
+		if (MakananList[i].nama == makananBaru.nama){
+			MakananList[i].jumlah += makananBaru.jumlah;// Menambahkan jumlah makanan yang baru dipesan ke jumlah tiket yang sudah ada
+			return true;
+		}
+	}
+	return false;
+}
+
+// Fungsi untuk memilih metode pembayaran
+void pilihMetodePembayaran(double totalSetelahDiskon) {
+    int pilihan;
+    cout << "\nPilih Metode Pembayaran:\n";
+    cout << "1. QRIS\n";
+    cout << "2. Debit\n";
+    cout << "3. Cash\n";
+    cout << "Pilihan Anda: ";
+    cin >> pilihan;
+
+    switch (pilihan) {
+        case 1:
+            cout << "Anda memilih pembayaran dengan QRIS. Total yang harus dibayar: Rp " << totalSetelahDiskon << endl;
+            break;
+        case 2:
+            cout << "Anda memilih pembayaran dengan Debit. Total yang harus dibayar: Rp " << totalSetelahDiskon << endl;
+            break;
+        case 3:
+            cout << "Anda memilih pembayaran dengan Cash. Total yang harus dibayar: Rp " << totalSetelahDiskon << endl;
+            break;
+        default:
+            cout << "Pilihan tidak valid. Pembayaran dibatalkan." << endl;
+            return;
+    }
+    cout << "Pembayaran berhasil! Terima kasih telah bertransaksi." << endl;
+}
+
+int main(){
+    vector<TiketBioskop> pesananTiket; //Deklaras vector TiketBioskop
+	vector<JenisKursi> pesananKursi; //Deklaras vector JenisKursi
+    vector<Makanan> pesananMakanan; //Deklaras vector Makanan
+    string noTelepon;
+    int totalJumlah = 0;
+    double totalHarga = 0;
+    float diskonMember = 0;
+    char lagi;
+    
+    
+    cout << "=========================================================================================\n";
+    cout << "		  Selamat Datang di Aplikasi Pembelian Tiket Bioskop!\n";
+    cout << "=========================================================================================\n";
+    cout << "\n---------------------------------- Daftar Film Bioskop ----------------------------------" << endl;
+
+    do {
+        
+	//Memanggil fungsi untuk menampilkan menu flm dan memilih film 
+	tampilkanMenuFilm();
+	TiketBioskop tiket = pilihFilm();
+	
+	//Memnanggil fungsi untuk menampilakan jenis kursi dan memilih jenis kursi
+	tampilkanJenisKursi();
+	JenisKursi Kursi = pilihKursi(tiket.jumlah);
+	
+	double subtotal = (tiket.harga + Kursi.harga) * tiket.jumlah; // Menghitung subtotal untuk pesanan saat ini
+    totalHarga += subtotal;  // Menambahkan subtotal ke total harga keseluruhan
+    totalJumlah += tiket.jumlah;
+
+	
+	if (!updatePesananTiket(pesananTiket, pesananKursi, tiket, Kursi)) {
+        pesananTiket.push_back(tiket);
+        pesananKursi.push_back(Kursi);
+    } 
+    
+    cout << "Subtotal untuk " << tiket.film << " dengan jenis kursi " << Kursi.jenis <<": Rp " << subtotal << endl;
+    cout << "Ingin membeli tiket film lain? (y/n): "; //Menanyakan user apakah ingin membeli tiket lagi
+    cin >> lagi;
+    system("CLS");
+    } while (lagi == 'y' || lagi == 'Y'); //Jika ya, melakukan perulangan pesan tiket
+	
+
+	//Menanyakan apakah user ingin memesan makanan
+	cout << "Apakah Ingin membeli makanan? (y/n): ";
+	cin >> lagi;
+	if (lagi == 'y' ||lagi == 'Y'){
+	    do {
+	    	//Memnanggil fungsi untuk menampilakan jenis kursi dan memilih jenis kursi
+	    	tampilkanMenuMakanan();
+	        Makanan makanan = pilihMakananMinuman();
+	        
+	        //Menghitung subtotal dengan mengalikan harga dengan jumlah
+	        double subtotalMakanan = makanan.harga * makanan.jumlah;
+	        totalHarga += subtotalMakanan; //Menjumlahkan subtotal dengan total harga keseluruhan
+	        
+	        if(!updatePesananMakanan(pesananMakanan, makanan)){
+		        pesananMakanan.push_back(makanan);	        	
+			}
+    		cout << "-----------------------------------------------------------------------------------------\n";
+	        cout << "Subtotal untuk " << makanan.nama << " sebanyak " << makanan.jumlah << ": Rp " << subtotalMakanan << endl;
+	        cout << "Ingin membeli makanan lain? (y/n): ";
+	        cin >> lagi;
+			system("CLS");
+	    } while (lagi == 'y' || lagi == 'Y');
+	}
+    
+
+	bool validMember = false;
+	int percobaan = 3;
+	cout << "Apakah memiliki member? (y/n): "; //Menanyakkan apakah user memiliki member
+	cin >> lagi;
+	if (lagi == 'y' || lagi == 'Y'){
+		
+		//Melakukan perulangan untuk mengisi nomor telepon sebanyak 3 kali
+		while (percobaan > 0 && !validMember) {
+			cout << "Masukan nomor telepon yang tertera di member:  ";
+			cin >> noTelepon;
+			
+			for (const auto& member : daftarMember){
+				if (member.noTelepon == noTelepon){
+					validMember = true;
+					break;
+				}
+			}
+			
+			//Jika ditemukan member dengan nomor tsb, mendapatkan potongan harga
+			if(validMember){
+				diskonMember = hitungDiskonMember(totalHarga);
+				cout << "Member di temukan, selamat mendapatkan potongan RP " << diskonMember << endl;
+				break;
+			} else {
+				percobaan--;
+				//Memberikan pesan gagal menemukan  member 
+				if (percobaan > 0) {
+					cout << "Member tidak ditemukan. Silahkan coba lagi." << endl << endl;
+				}
+			}
+		}
+		if (percobaan == 0){
+			cout << "Member tidak ditemukan dan sudah mencapai batas percobaan." << endl;
+		}
+	} 
+	
+	//Jika tidak memiliki member
+	if (!validMember) {
+		cout << "Apakah ingin mendaftar member baru? (y/n) :";
+		cin >> lagi;
+		if (lagi == 'y' || lagi == 'Y'){
+			
+			//Memanggil fungsi untuk mendaftarkan member baru
+			registrasiMember();
+			diskonMember = hitungDiskonMember(totalHarga); //Menghitung diskon member
+			cout << "Nikmati potonngan eksklusif sebesar Rp " << diskonMember << endl;
+		}
+	}
+
+    // Menghitung diskon minimal pembelian 5 tiket
+    double diskonMinPembelian = hitungDiskonMinPembelian(totalJumlah, totalHarga);
+    // Menghitung total harga setelah di potong diskon
+    double totalSetelahDiskon = totalHarga - diskonMinPembelian - diskonMember;
+
+	system("PAUSE");
+	system("CLS");
+	
+    // Menampilkan ringkasan pesanan
+    cout << endl;
+    cout << "                          ---- Daftar Tiket yang Dibeli ----                             \n";
+    cout << "-----------------------------------------------------------------------------------------\n";
+    cout << left << setw(15) << "Film" << setw(15) << "Harga" << setw(15) << "Jumlah" << setw(20) << "Jenis Kursi" << setw(15) << "Subtotal" << endl;
+    cout << "-----------------------------------------------------------------------------------------\n";
+
+
+	//list pesanan tiket
+	size_t i;
+    for ( i = 0; i < pesananTiket.size(); ++i) {
+    cout << left << setw(15) << pesananTiket[i].film
+         << "Rp " << setw(15) << pesananTiket[i].harga
+         << setw(12) << pesananTiket[i].jumlah
+         << setw(20) << pesananKursi[i].jenis
+         << "Rp " << setw(15) 
+		 << fixed << setprecision(0)
+		 << (pesananTiket[i].harga + pesananKursi[i].harga) * pesananTiket[i].jumlah 
+         << endl;
+	}
+
+
+    cout << endl << endl << endl;
+    cout << "                          ---- Daftar Makanan yang Dibeli ----                           \n";
+    cout << "-----------------------------------------------------------------------------------------\n";
+    cout << left << setw(15) << "Makanan" << setw(15) << "Harga" << setw(15) << "Jumlah" << setw(15) << "Subtotal" << endl;
+    cout << "-----------------------------------------------------------------------------------------\n";
+
+	//list pesananan makanan
+    for (const Makanan& m : pesananMakanan) {
+        cout << left << setw(15) << m.nama
+             << "Rp " << setw(15) << m.harga
+             << setw(12) << m.jumlah
+             << "Rp " << setw(10) 
+			 << fixed << setprecision(0)
+			 << m.harga * m.jumlah << endl;
+    }
+	
+	cout << endl;
+	cout << fixed << setprecision(0); 
+	cout << setw(70) << right << "Total Harga" 
+         << setw(10) << right << ": Rp " 
+         << totalHarga << endl;
+
+	cout << fixed << setprecision(0); 
+    cout << setw(70) << right << "Diskon Pembelian" 
+		 << setw(10) << ": Rp " 
+		 << diskonMinPembelian << endl;
+	
+	cout << fixed << setprecision(0); 
+	cout << setw(70) << right << "Diskon Member" 
+		 << setw(10) << ": Rp " 
+		 << diskonMember << endl;
+
+	cout << fixed << setprecision(0); 
+    cout << setw(70) << "Total Setelah Diskon" 
+		 << setw(10) << ": Rp " 
+		 << totalSetelahDiskon << endl;
+
+    // Menambahkan pemilihan metode pembayaran
+    pilihMetodePembayaran(totalSetelahDiskon);
+		 
+	cout << endl << endl << endl;
+	cout << "=========================================================================================\n";
+    cout << setw(65) << right << "Terima Kasih telah membeli tiket bioskop!\n\n\n";
+
+    return 0;
+}
